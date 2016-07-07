@@ -1,0 +1,3 @@
+﻿implement right clicking - DONE
+implement save and load presets from files - DONE
+implement number of times to do the click loop
