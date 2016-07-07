@@ -3,3 +3,4 @@ implement save and load presets from files - DONE
 implement number of times to do the click loop
 save/load the click delay and variance in the script
 refactor the code to make it more nice
+add validation on variance and offput so that there cant be negative numbers
