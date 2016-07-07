@@ -25,7 +25,7 @@ namespace Scripting
                 }
             }
         }
-        //test
+
         internal static void SaveScript(string FilePath, ListBox PointList, RichTextBox NoteBox)
         {
             StreamWriter outFile = new StreamWriter(FilePath);
