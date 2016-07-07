@@ -1,0 +1,1 @@
+This is an autoclicker that I created to complete repetative tasks in games that I play.
