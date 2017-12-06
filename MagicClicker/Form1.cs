@@ -69,34 +69,37 @@ namespace ClickTest
 
         private void clickSequence()
         {
-            foreach (string s in listMousePoints.Items)
+            for (int loop = 0; loop < numLoopCount.Value; loop++)
             {
-                string[] sArr = s.Split(';');
-                Cursor.Position = new Point(
-                    Convert.ToInt32(sArr[1]) + r.Next(-Convert.ToInt32(sArr[3]), Convert.ToInt32(sArr[3])),
-                    Convert.ToInt32(sArr[2]) + r.Next(-Convert.ToInt32(sArr[3]), Convert.ToInt32(sArr[3]))
-                    );
+                foreach (string s in listMousePoints.Items)
+                {
+                    string[] sArr = s.Split(';');
+                    Cursor.Position = new Point(
+                        Convert.ToInt32(sArr[1]) + r.Next(-Convert.ToInt32(sArr[3]), Convert.ToInt32(sArr[3])),
+                        Convert.ToInt32(sArr[2]) + r.Next(-Convert.ToInt32(sArr[3]), Convert.ToInt32(sArr[3]))
+                        );
 
-                //set up the INPUT struct and fill it for the mouse down
-                INPUT i = new INPUT();
-                i.type = INPUT_MOUSE;
-                i.mi.dx = 0;
-                i.mi.dy = 0;
-                // TODO: change to handle right down as well
-                i.mi.dwFlags = sArr[0] == "left" ? MOUSEEVENTF_LEFTDOWN : MOUSEEVENTF_RIGHTDOWN;
-                i.mi.dwExtraInfo = IntPtr.Zero;
-                i.mi.mouseData = 0;
-                i.mi.time = 0;
-                // send the input 
-                SendInput(1, ref i, Marshal.SizeOf(i));
-                // sleep to simulate holding down the mouse
-                System.Threading.Thread.Sleep(60 + r.Next(-15, 15));
-                //set the INPUT for mouse up and send it
-                // TODO: change to handle right up as well
-                i.mi.dwFlags = sArr[0] == "left" ? MOUSEEVENTF_LEFTUP : MOUSEEVENTF_RIGHTUP;
-                SendInput(1, ref i, Marshal.SizeOf(i));
-                // sleep for designated time
-                System.Threading.Thread.Sleep(Convert.ToInt32(timeClickDelay.Value) + r.Next(0, Convert.ToInt32(timeClickVariance.Value)));
+                    //set up the INPUT struct and fill it for the mouse down
+                    INPUT i = new INPUT();
+                    i.type = INPUT_MOUSE;
+                    i.mi.dx = 0;
+                    i.mi.dy = 0;
+                    // TODO: change to handle right down as well
+                    i.mi.dwFlags = sArr[0] == "left" ? MOUSEEVENTF_LEFTDOWN : MOUSEEVENTF_RIGHTDOWN;
+                    i.mi.dwExtraInfo = IntPtr.Zero;
+                    i.mi.mouseData = 0;
+                    i.mi.time = 0;
+                    // send the input 
+                    SendInput(1, ref i, Marshal.SizeOf(i));
+                    // sleep to simulate holding down the mouse
+                    System.Threading.Thread.Sleep(60 + r.Next(-15, 15));
+                    //set the INPUT for mouse up and send it
+                    // TODO: change to handle right up as well
+                    i.mi.dwFlags = sArr[0] == "left" ? MOUSEEVENTF_LEFTUP : MOUSEEVENTF_RIGHTUP;
+                    SendInput(1, ref i, Marshal.SizeOf(i));
+                    // sleep for designated time
+                    System.Threading.Thread.Sleep(Convert.ToInt32(timeClickDelay.Value) + r.Next(0, Convert.ToInt32(timeClickVariance.Value)));
+                }
             }
         }
         
@@ -131,7 +134,7 @@ namespace ClickTest
 
             if (saveDialog.FileName != "")
             {
-                Scripting.Scripting.SaveScript(saveDialog.FileName, listMousePoints, txtScriptNotes);
+                Scripting.Scripting.SaveScript(saveDialog.FileName, listMousePoints, txtScriptNotes, timeClickDelay, timeClickVariance, numPixelOffput, numLoopCount);
             }
         }
         private void loadScriptToolStripMenuItem_Click(object sender, EventArgs e)
@@ -143,7 +146,7 @@ namespace ClickTest
 
             if (loadDialog.FileName != "")
             {
-                Scripting.Scripting.LoadScript(loadDialog.FileName, listMousePoints, txtScriptNotes);
+                Scripting.Scripting.LoadScript(loadDialog.FileName, listMousePoints, txtScriptNotes, timeClickDelay, timeClickVariance, numPixelOffput, numLoopCount);
             }
         }
 
